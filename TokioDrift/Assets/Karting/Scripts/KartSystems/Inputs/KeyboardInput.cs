@@ -1,15 +1,80 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
 
 namespace KartGame.KartSystems {
 
-    public class KeyboardInput : BaseInput
+    public class KeyboardInput : BaseInput 
     {
         public string Horizontal = "Horizontal";
         public string Vertical = "Vertical";
 
-        public override Vector2 GenerateInput() {
+		Thread receiveThread; //1
+		UdpClient client; //2
+		int port; //3
+		
+		public float ejex ;
+		
+		void Start () 
+		{
+		  port = 5065; //1 
+		  ejex = 0.0f;
+		  InitUDP(); //4
+		}
+		
+
+		private void InitUDP()
+		{
+		  print ("UDP Initialized");
+
+		  receiveThread = new Thread (new ThreadStart(ReceiveData)); //1 
+		  receiveThread.IsBackground = true; //2
+		  receiveThread.Start(); //3
+		}
+
+		
+		private void ReceiveData()
+		{
+		  client = new UdpClient (port); //1
+		  while (true) //2
+		  {
+			try
+			{
+			  IPEndPoint anyIP = new IPEndPoint(IPAddress.Parse("0.0.0.0"), port); //3
+			  byte[] data = client.Receive(ref anyIP); //4
+
+			  string text = Encoding.UTF8.GetString(data); //5
+			  print (">> " + text);
+
+			  if(String.Equals(text, "straight")){
+		  	  	ejex = 0.0f;
+		  	  }else if(String.Equals(text, "left")){
+		  	  	ejex = -1.0f;
+			  }else if(String.Equals(text, "right")){
+			  	ejex = 1.0f;
+		  	  }
+
+			} 
+			catch(Exception e)
+			{
+			  print (e.ToString()); //7
+			}
+		  }
+		}
+		
+		void Update () 
+		{
+		}    
+		
+        public override Vector2 GenerateInput() {            
+            
             return new Vector2 {
-                x = Input.GetAxis(Horizontal),
+                x = ejex,
+                //x = Input.GetAxis(Horizontal),
                 y = Input.GetAxis(Vertical)
             };
         }
