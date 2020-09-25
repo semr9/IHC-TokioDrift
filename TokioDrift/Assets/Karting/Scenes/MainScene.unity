@@ -11275,7 +11275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207105314}
   m_LocalRotation: {x: -0.01802713, y: 0.000000004300896, z: 7.7545435e-11, w: 0.9998375}
-  m_LocalPosition: {x: 16.47, y: 2.28, z: 0.5300002}
+  m_LocalPosition: {x: 31.92, y: 2.28, z: 0.5300002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -11568,7 +11568,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -259, y: -149}
+  m_AnchoredPosition: {x: -146, y: -87}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1278824467
@@ -13310,7 +13310,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389235981}
   m_LocalRotation: {x: -0.01802713, y: 0.000000004300896, z: 7.7545435e-11, w: 0.9998375}
-  m_LocalPosition: {x: 16.47, y: 2.28, z: 0.5300002}
+  m_LocalPosition: {x: 31.92, y: 2.28, z: 0.5300002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1704309284}
@@ -18681,7 +18681,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2031312002}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2027802346
+--- !u!114 &2027802341
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18690,11 +18690,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2027802340}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3503aab93ad47d24fa7dd2fcbb8605ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b27cb086d547dd439d0a61fdb7ceee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   myTMP: {fileID: 1278824467}
---- !u!114 &2027802347
+--- !u!114 &2027802342
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18703,13 +18703,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2027802340}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ade62126557f6aa478bea0149604dbff, type: 3}
+  m_Script: {fileID: 11500000, guid: ec20fb594a4900f49948a1571deded2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   axleInfos: []
-  maxMotorTorque: 50
-  maxBrakeTorque: 50
-  maxSteeringAngle: 50
+  maxMotorTorque: 0
+  maxBrakeTorque: 0
+  maxSteeringAngle: 0
   useVoiceRecognition: 1
 --- !u!1001 &2031312002
 PrefabInstance:
@@ -18721,7 +18721,7 @@ PrefabInstance:
     - target: {fileID: 3934862071804020739, guid: acc3f1c47c2ee3649a5048403106ffa6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.47
+      value: 31.92
       objectReference: {fileID: 0}
     - target: {fileID: 3934862071804020739, guid: acc3f1c47c2ee3649a5048403106ffa6,
         type: 3}

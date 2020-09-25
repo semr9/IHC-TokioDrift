@@ -180,13 +180,17 @@ namespace KartGame.KartSystems
                 turboActivado = true;
                 turbo = Time.time;
                 ComandoVoz.text = "turbo activado";
-            } else if (ComandoVoz.text == "freno")
+            } else if (ComandoVoz.text == "stop")
             {
-                accel -= 10;
+                Rigidbody.drag = 50;
+                //accel -= 10;
                 //if (Rigidbody.velocity.x <= 0.0f)
                 //    ComandoVoz.text = "freno activado";
                 //ComandoVoz.text = "turbo activado";
 
+            } else if (ComandoVoz.text == "start")
+            {
+                Rigidbody.drag = 0.05f;
             }
             if (Time.time < turbo + 2)
                 accel += 5;
