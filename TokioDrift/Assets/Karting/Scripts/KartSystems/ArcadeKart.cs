@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using TMPro;
 
 namespace KartGame.KartSystems
 {
@@ -137,7 +138,10 @@ namespace KartGame.KartSystems
 
         /****MY CODE*****/
         public Text speedText;
-
+        public TextMeshProUGUI ComandoVoz;
+        private float turbo;
+        private bool turboActivado;
+        private float freno;
 
         void Awake()
         {
@@ -164,10 +168,32 @@ namespace KartGame.KartSystems
             GroundPercent = (float)groundedCount / Wheels.Length;
             AirPercent = 1 - GroundPercent;
 
+
+
             // gather inputs
             //float accel = Input.y;
             float accel = float.Parse(speedText.text);
             float turn = Input.x;
+
+            if (ComandoVoz.text == "turbo")
+            {
+                turboActivado = true;
+                turbo = Time.time;
+                ComandoVoz.text = "turbo activado";
+            } else if (ComandoVoz.text == "freno")
+            {
+                accel -= 10;
+                //if (Rigidbody.velocity.x <= 0.0f)
+                //    ComandoVoz.text = "freno activado";
+                //ComandoVoz.text = "turbo activado";
+
+            }
+            if (Time.time < turbo + 2)
+                accel += 5;
+            else if (turboActivado)
+                ComandoVoz.text = " ";
+
+
 
             // apply vehicle physics
             GroundVehicle(minHeight);
@@ -301,8 +327,12 @@ namespace KartGame.KartSystems
             bool localVelDirectionIsFwd = localVel.z >= 0;
 
             // use the max speed for the direction we are going--forward or reverse.
-            float maxSpeed = accelDirectionIsFwd ? finalStats.TopSpeed : finalStats.ReverseSpeed;
-            float accelPower = accelDirectionIsFwd ? finalStats.Acceleration : finalStats.ReverseAcceleration;
+            float maxSpeed; 
+            float accelPower; accelPower = accelDirectionIsFwd ? finalStats.Acceleration : finalStats.ReverseAcceleration;
+            if (Time.time < turbo + 2)
+                maxSpeed = accelDirectionIsFwd ? finalStats.TopSpeed + 10 : finalStats.ReverseSpeed;
+            else
+                maxSpeed = accelDirectionIsFwd ? finalStats.TopSpeed : finalStats.ReverseSpeed;
 
             float accelRampT = Rigidbody.velocity.magnitude / maxSpeed;
             float multipliedAccelerationCurve = finalStats.AccelerationCurve * accelerationCurveCoeff;

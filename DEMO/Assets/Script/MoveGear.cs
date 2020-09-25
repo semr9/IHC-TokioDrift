@@ -24,24 +24,28 @@ public class MoveGear : NetworkBehaviour
         if (Input.acceleration.x > 0.3f)
         {
             print("Move right");
-            transform.Translate(Input.acceleration.x * Time.deltaTime, 0, 0);
+            if (transform.position.x < 1.5f)
+                transform.Translate(Input.acceleration.x * Time.deltaTime, 0, 0);
         }
         else if (Input.acceleration.x < -0.3f)
         {
             print("Move left");
-            transform.Translate(Input.acceleration.x * Time.deltaTime, 0, 0);
+            if (transform.position.x > 0.5f)
+                transform.Translate(Input.acceleration.x * Time.deltaTime, 0, 0);
         }
         if (Input.acceleration.y > 0.40f)
         {
             print("Move up");
             speed = Input.acceleration.y;
-            transform.Translate(0, Input.acceleration.y * Time.deltaTime, 0);
+            if(transform.position.y < 1.5f)
+                transform.Translate(0, Input.acceleration.y * Time.deltaTime, 0);
         }
         else if (Input.acceleration.y < -0.40f)
         {
             print("Move down");
             speed = Input.acceleration.y / 2;
-            transform.Translate(0, Input.acceleration.y * Time.deltaTime, 0);
+            if (transform.position.y > 0.5f)
+                transform.Translate(0, Input.acceleration.y * Time.deltaTime, 0);
         }
         speed = (Input.acceleration.y > 0) ? Input.acceleration.y : Input.acceleration.y / 2;
         sendSpeed(speed);
