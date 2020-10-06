@@ -122,7 +122,8 @@ namespace Mirror
             if (NetworkServer.active)
             {
                 GUILayout.Label("Server: active. Transport: " + Transport.activeTransport);
-                GUILayout.Label("Number of clients: " + manager.numPlayers);
+                GUILayout.Label("Number of connections: " + manager.numPlayers);
+
             }
             if (NetworkClient.isConnected)
             {

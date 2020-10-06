@@ -144,4 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  speed: 0
+  speed: {x: 0, y: 0, z: 0, w: 0}
+  started: 0
+  TextMobileConn: {fileID: 0}
+  Title: {fileID: 0}

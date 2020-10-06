@@ -99,7 +99,7 @@ namespace Mirror
         /// </summary>
         [FormerlySerializedAs("m_NetworkAddress")]
         [Tooltip("Network Address where the client should connect to the server. Server does not use this for anything.")]
-        public string networkAddress = "192.168.43.37";
+        public string networkAddress = "localhost";
 
         /// <summary>
         /// The maximum number of concurrent network connections to support.
@@ -561,7 +561,7 @@ namespace Mirror
                 authenticator.OnClientAuthenticated.AddListener(OnClientAuthenticated);
             }
 
-            //networkAddress = "localhost";
+            networkAddress = "localhost";
             NetworkServer.ActivateHostScene();
             RegisterClientMessages();
 
