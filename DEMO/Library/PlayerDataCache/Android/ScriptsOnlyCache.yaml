@@ -778,7 +778,7 @@ ScriptsOnlyBuild:
     className: NetworkLogSettings
   - hash:
       serializedVersion: 2
-      Hash: c56a9426da8f5d94d45fd88dc881ef1b
+      Hash: abd42ea9151dcc56f33b190e5048609d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MoveGear

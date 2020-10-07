@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -138,6 +138,7 @@ namespace KartGame.KartSystems
 
         /****MY CODE*****/
         public Text speedText;
+        public Text TextTopSpeed;
         public TextMeshProUGUI ComandoVoz;
         private float turbo;
         private bool turboActivado;
@@ -334,9 +335,15 @@ namespace KartGame.KartSystems
             float maxSpeed; 
             float accelPower; accelPower = accelDirectionIsFwd ? finalStats.Acceleration : finalStats.ReverseAcceleration;
             if (Time.time < turbo + 2)
+            {
+                TextTopSpeed.text = (finalStats.TopSpeed + 10).ToString();
                 maxSpeed = accelDirectionIsFwd ? finalStats.TopSpeed + 10 : finalStats.ReverseSpeed;
+            }
             else
+            {
                 maxSpeed = accelDirectionIsFwd ? finalStats.TopSpeed : finalStats.ReverseSpeed;
+                TextTopSpeed.text = finalStats.TopSpeed.ToString();
+            }
 
             float accelRampT = Rigidbody.velocity.magnitude / maxSpeed;
             float multipliedAccelerationCurve = finalStats.AccelerationCurve * accelerationCurveCoeff;
