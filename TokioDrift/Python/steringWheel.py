@@ -17,8 +17,8 @@ last = []
 video = VideoStream(src=0).start()
 frame = None
 
-lb = [40, 100, 0]
-rb = [255, 255, 255]
+lb = [40, 83, 0]
+rb = [175, 255, 255]
 
 
 def set_lb(i, v):
@@ -28,32 +28,39 @@ def set_lb(i, v):
 def set_rb(i, v):
     rb[i] = v
 
+cv2.namedWindow('mask')
+cv2.createTrackbar('lower_b_0', 'mask', lb[0], 255, (lambda a: set_lb(0, a)))
+cv2.createTrackbar('lower_b_1', 'mask', lb[1], 255, (lambda a: set_lb(1, a)))
+cv2.createTrackbar('lower_b_2', 'mask', lb[2], 255, (lambda a: set_lb(2, a)))
+cv2.createTrackbar('upper_b_0', 'mask', rb[0], 255, (lambda a: set_rb(0, a)))
+cv2.createTrackbar('upper_b_1', 'mask', rb[1], 255, (lambda a: set_rb(1, a)))
+cv2.createTrackbar('upper_b_2', 'mask', rb[2], 255, (lambda a: set_rb(2, a)))
 
 actions = ["", ""]
 
 
 # use this for getting your own threshold values for whatever color
-# cv2.createTrackbar('lower_b_0', 'mask', lb[0], 255, (lambda a: set_lb(0, a)))
-# cv2.createTrackbar('lower_b_1', 'mask', lb[1], 255, (lambda a: set_lb(1, a)))
-# cv2.createTrackbar('lower_b_2', 'mask', lb[2], 255, (lambda a: set_lb(2, a)))
-# cv2.createTrackbar('upper_b_0', 'mask', rb[0], 255, (lambda a: set_rb(0, a)))
-# cv2.createTrackbar('upper_b_1', 'mask', rb[1], 255, (lambda a: set_rb(1, a)))
-# cv2.createTrackbar('upper_b_2', 'mask', rb[2], 255, (lambda a: set_rb(2, a)))
+#cv2.createTrackbar('lower_b_0', 'mask', lb[0], 255, (lambda a: set_lb(0, a)))
+#cv2.createTrackbar('lower_b_1', 'mask', lb[1], 255, (lambda a: set_lb(1, a)))
+#cv2.createTrackbar('lower_b_2', 'mask', lb[2], 255, (lambda a: set_lb(2, a)))
+#cv2.createTrackbar('upper_b_0', 'mask', rb[0], 255, (lambda a: set_rb(0, a)))
+#cv2.createTrackbar('upper_b_1', 'mask', rb[1], 255, (lambda a: set_rb(1, a)))
+#cv2.createTrackbar('upper_b_2', 'mask', rb[2], 255, (lambda a: set_rb(2, a)))
 
 
 def steer(slope):
-    if 70 <= slope <= 105:
+    if 85 <= slope <= 95:
         sock.sendto( ("straight").encode(), (UDP_IP, UDP_PORT) )
         print("straight") 
-    elif 140 >= slope > 105:
+    elif 145 >= slope > 95:
         sock.sendto( ("left").encode(), (UDP_IP, UDP_PORT) )
         print("left") 
-    elif 35 <= slope < 70 :
+    elif 35 <= slope < 85 :
         sock.sendto( ("right").encode(), (UDP_IP, UDP_PORT) )
         print("right") 
     else :     
-        sock.sendto( ("straight").encode(), (UDP_IP, UDP_PORT) )
-        print("straight") 
+        sock.sendto( ("not").encode(), (UDP_IP, UDP_PORT) )
+        print("not") 
 
 def get_action():
     return "{} {}".format(actions[0], actions[1])
@@ -61,17 +68,20 @@ def get_action():
 
 def process_wheel():
     global frame
+    #copiamos el frame 
     wheel_frame = frame.copy()
-
+    #cambair los colores de una imagen a otros colores
     hsv = cv2.cvtColor(wheel_frame, cv2.COLOR_BGR2HSV)
-    
+    #imprimir imagen
+    #cv2.imshow(window_name, image)
+    #conseguir los valores
     lower_blue = np.array(copy.copy(lb))  # [40, 100, 0]
     upper_blue = np.array(copy.copy(rb))  # [255, 255, 255])
-
+    #poner en un rango los valores
     mask = cv2.inRange(hsv, lower_blue, upper_blue)
 
     anded_res = cv2.bitwise_and(wheel_frame, wheel_frame, mask=mask)
-    contours, _ = cv2.findContours(cv2.Canny(anded_res, 255 / 3, 255), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    _,contours, _ = cv2.findContours(cv2.Canny(anded_res, 255 / 3, 255), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     area_threshold = 400
     inds = []
@@ -82,6 +92,8 @@ def process_wheel():
 
     if not inds or len(inds) != 2:
         cv2.imshow('wheel', wheel_frame)  # [165:200, 326:500])
+        sock.sendto( ("not").encode(), (UDP_IP, UDP_PORT) )
+        print("not")
         # cv2.imshow('mask', mask)  # [165:200, 326:500])
         return
 
@@ -112,18 +124,25 @@ def process_wheel():
     cv2.line(wheel_frame, (0, 200), (600, 200), (255, 255, 255), 1)
     cv2.line(wheel_frame, (0, 250), (600, 250), (255, 255, 255), 1)
     steer(slope)
-
+    
     cv2.imshow('wheel', wheel_frame)  # [165:200, 326:500])
-    # cv2.imshow('mask', mask)  # [165:200, 326:500])
+    cv2.imshow('mask', mask)  # [165:200, 326:500])
+    cv2.getTrackbarPos('lower_b_0','mask')
+    cv2.getTrackbarPos('lower_b_1','mask')
+    cv2.getTrackbarPos('lower_b_2','mask')
+    cv2.getTrackbarPos('upper_b_0','mask')
+    cv2.getTrackbarPos('upper_b_1','mask')
+    cv2.getTrackbarPos('upper_b_2','mask')
 
 
 while True:
     # Capture frame-by-frame
     frame = video.read()
-
+    # Girar la imagen horizontalmente, para ver lo que vea lo que yo veo
     frame = cv2.flip(frame, 1)
+    # Remove noise with calculate.
     frame = cv2.medianBlur(frame, 5)
-    frame = imutils.resize(frame, width=600, height=400)
+    frame = imutils.resize(frame, width=600, height=600)
 
     process_wheel()
 

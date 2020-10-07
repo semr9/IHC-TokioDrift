@@ -6,77 +6,93 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-namespace KartGame.KartSystems {
+namespace KartGame.KartSystems
+{
 
-    public class KeyboardInput : BaseInput 
-    {
-        public string Horizontal = "Horizontal";
-        public string Vertical = "Vertical";
+	public class KeyboardInput : BaseInput
+	{
+		public string Horizontal = "Horizontal";
+		public string Vertical = "Vertical";
 
 		Thread receiveThread; //1
 		UdpClient client; //2
 		int port; //3
-		
-		public float ejex ;
-		
-		void Start () 
+
+		public float ejex;
+
+		void Start()
 		{
-		  port = 5065; //1 
-		  ejex = 0.0f;
-		  InitUDP(); //4
+			port = 5065; //1 
+			ejex = 0.0f;
+			InitUDP(); //4
 		}
-		
+
 
 		private void InitUDP()
 		{
-		  print ("UDP Initialized");
+			print("UDP Initialized");
 
-		  receiveThread = new Thread (new ThreadStart(ReceiveData)); //1 
-		  receiveThread.IsBackground = true; //2
-		  receiveThread.Start(); //3
+			receiveThread = new Thread(new ThreadStart(ReceiveData)); //1 
+			receiveThread.IsBackground = true; //2
+			receiveThread.Start(); //3
 		}
 
-		
+
 		private void ReceiveData()
 		{
-		  client = new UdpClient (port); //1
-		  while (true) //2
-		  {
 			try
+            {
+				client = new UdpClient(port); //1
+
+            } catch(Exception e)
+            {
+				print("Default Port busy, created in another one");
+				client = new UdpClient(50003);
+            }
+			while (true) //2
 			{
-			  IPEndPoint anyIP = new IPEndPoint(IPAddress.Parse("0.0.0.0"), port); //3
-			  byte[] data = client.Receive(ref anyIP); //4
+				try
+				{
+					IPEndPoint anyIP = new IPEndPoint(IPAddress.Parse("0.0.0.0"), port); //3
+					byte[] data = client.Receive(ref anyIP); //4
 
-			  string text = Encoding.UTF8.GetString(data); //5
-			  print (">> " + text);
+					string text = Encoding.UTF8.GetString(data); //5
+					print(">> " + text);
 
-			  if(String.Equals(text, "straight")){
-		  	  	ejex = 0.0f;
-		  	  }else if(String.Equals(text, "left")){
-		  	  	ejex = -1.0f;
-			  }else if(String.Equals(text, "right")){
-			  	ejex = 1.0f;
-		  	  }
+					if (String.Equals(text, "straight"))
+					{
+						ejex = 0.0f;
+					}
+					else if (String.Equals(text, "left"))
+					{
+						ejex = -1.0f;
+					}
+					else if (String.Equals(text, "right"))
+					{
+						ejex = 1.0f;
+					}
 
-			} 
-			catch(Exception e)
-			{
-			  print (e.ToString()); //7
+				}
+				catch (Exception e)
+				{
+					print(e.ToString()); //7
+				}
 			}
-		  }
 		}
-		
-		void Update () 
+
+		void Update()
 		{
-		}    
-		
-        public override Vector2 GenerateInput() {            
-            
-            return new Vector2 {
-                x = ejex,
-                //x = Input.GetAxis(Horizontal),
-                y = Input.GetAxis(Vertical)
-            };
-        }
-    }
+		}
+
+		public override Vector2 GenerateInput()
+		{
+
+			return new Vector2
+			{
+				x = ejex,
+				//x = Input.GetAxis(Horizontal),
+				y = Input.GetAxis(Vertical)
+			};
+		}
+	}
 }

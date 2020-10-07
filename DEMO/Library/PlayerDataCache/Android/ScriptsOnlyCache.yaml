@@ -8,7 +8,6 @@ ScriptsOnlyBuild:
     - Mirror.NetworkTransform
     Mirror.dll:
     - Mirror.NetworkIdentity
-    - Mirror.NetworkManagerHUD
     - Mirror.TelepathyTransport
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
@@ -17,10 +16,19 @@ ScriptsOnlyBuild:
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
+    - TMPro.TextMeshProUGUI
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
+    UnityEngine.UI.dll:
+    - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
+    - UnityEngine.UI.CanvasScaler
+    - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Image
+    - UnityEngine.UI.RawImage
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
     - Class: 1
@@ -43,8 +51,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 49
       Script: {instanceID: 0}
-    - Class: 64
-      Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
     - Class: 104
@@ -52,19 +58,31 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 11738}
+    - Class: 114
       Script: {instanceID: 11760}
     - Class: 114
-      Script: {instanceID: 11842}
+      Script: {instanceID: 11764}
     - Class: 114
       Script: {instanceID: 12002}
+    - Class: 114
+      Script: {instanceID: 12046}
+    - Class: 114
+      Script: {instanceID: 12558}
     - Class: 114
       Script: {instanceID: 12592}
     - Class: 114
       Script: {instanceID: 12886}
     - Class: 114
+      Script: {instanceID: 13124}
+    - Class: 114
       Script: {instanceID: 13386}
     - Class: 114
       Script: {instanceID: 13404}
+    - Class: 114
+      Script: {instanceID: 13652}
+    - Class: 114
+      Script: {instanceID: 13732}
     - Class: 114
       Script: {instanceID: 13788}
     - Class: 114
@@ -73,6 +91,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 13952}
     - Class: 114
       Script: {instanceID: 13994}
+    - Class: 114
+      Script: {instanceID: 14222}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -82,6 +102,14 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
       Script: {instanceID: 0}
     - Class: 850595691
       Script: {instanceID: 0}
@@ -202,7 +230,7 @@ ScriptsOnlyBuild:
     className: Text
   - hash:
       serializedVersion: 2
-      Hash: 1adf292136fa277a73bfa6421602b9e3
+      Hash: e58fd4151392a1b7b63f72af74253a80
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NetworkManagerPhone
