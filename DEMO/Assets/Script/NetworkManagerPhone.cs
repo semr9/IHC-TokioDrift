@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 using Mirror;
 using System.Diagnostics;
 using System;
-using TMPro;
 
 
 /*
@@ -13,10 +12,8 @@ using TMPro;
 
 public class NetworkManagerPhone : NetworkManager
 {
-    public Transform playerSpawn;
-    public GameObject ButtonConnectServer;
-    public TextMeshProUGUI connectedText;
     #region Unity Callbacks
+    public Transform playerSpawn;
 
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
@@ -230,10 +227,16 @@ public class NetworkManagerPhone : NetworkManager
     /// </summary>
     public override void OnStartClient()
     {
-        RectTransform tmp = ButtonConnectServer.GetComponent<RectTransform>();
-        tmp.anchoredPosition = new Vector2(500, tmp.anchoredPosition.y);
-        tmp = connectedText.GetComponent<RectTransform>();
-        tmp.anchoredPosition = new Vector2(0, tmp.anchoredPosition.y);
+        //if(!NetworkServer.active)
+        //{
+        //    print("Network not active");
+        //    return;
+        //}
+        //print("Player connected");
+        //gear = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Capsule"));
+        //NetworkServer.Spawn(gear);
+
+
     }
 
     /// <summary>
@@ -250,10 +253,7 @@ public class NetworkManagerPhone : NetworkManager
     /// This is called when a client is stopped.
     /// </summary>
     public override void OnStopClient() {
-        RectTransform tmp = ButtonConnectServer.GetComponent<RectTransform>();
-        tmp.anchoredPosition = new Vector2(0, tmp.anchoredPosition.y);
-        tmp = connectedText.GetComponent<RectTransform>();
-        tmp.anchoredPosition = new Vector2(500, tmp.anchoredPosition.y);
+        //NetworkServer.Destroy(gear);
     }
 
     #endregion

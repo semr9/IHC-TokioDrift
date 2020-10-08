@@ -17,8 +17,8 @@ last = []
 video = VideoStream(src=0).start()
 frame = None
 
-lb = [40, 83, 0]
-rb = [175, 255, 255]
+lb = [41, 102, 135]
+rb = [159, 255, 255]
 
 
 def set_lb(i, v):
@@ -81,7 +81,7 @@ def process_wheel():
     mask = cv2.inRange(hsv, lower_blue, upper_blue)
 
     anded_res = cv2.bitwise_and(wheel_frame, wheel_frame, mask=mask)
-    _,contours, _ = cv2.findContours(cv2.Canny(anded_res, 255 / 3, 255), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(cv2.Canny(anded_res, 255 / 3, 255), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     area_threshold = 400
     inds = []

@@ -9,34 +9,41 @@ using System.Collections.Generic;
 
 public class MoveGear : NetworkBehaviour
 {
-    Gyroscope gyro;
-    public Quaternion speed;
-    public Quaternion correctionQuaternion;
+    public float speed;
 
     [Command]
-    public void sendSpeed(Quaternion newSpeed)
+    public void sendSpeed(float newSpeed)
     {
         this.speed = newSpeed;
     }
 
-    void Start()
-    {
-        gyro = Input.gyro;
-        gyro.enabled = true;
-        correctionQuaternion = Quaternion.Euler(90f, 0f, 0f);
-    }
 
     void Update()
     {
-        //speed = 0;
-        print(gyro.attitude);
-        Quaternion calculatedRotation = correctionQuaternion * GyroToUnity(gyro.attitude);
-        transform.rotation = calculatedRotation;
-        speed = calculatedRotation * new Quaternion(0,0,1,0);
+        speed = 0;
+        if (Input.acceleration.x > 0.3f)
+        {
+            print("Move right");
+            transform.Translate(Input.acceleration.x * Time.deltaTime, 0, 0);
+        }
+        else if (Input.acceleration.x < -0.3f)
+        {
+            print("Move left");
+            transform.Translate(Input.acceleration.x * Time.deltaTime, 0, 0);
+        }
+        if (Input.acceleration.y > 0.40f)
+        {
+            print("Move up");
+            speed = Input.acceleration.y;
+            transform.Translate(0, Input.acceleration.y * Time.deltaTime, 0);
+        }
+        else if (Input.acceleration.y < -0.40f)
+        {
+            print("Move down");
+            speed = Input.acceleration.y / 2;
+            transform.Translate(0, Input.acceleration.y * Time.deltaTime, 0);
+        }
+        speed = (Input.acceleration.y > 0) ? Input.acceleration.y : Input.acceleration.y / 2;
         sendSpeed(speed);
-    }
-    private static Quaternion GyroToUnity(Quaternion q)
-    {
-        return new Quaternion(q.x, q.y, -q.z, -q.w);
     }
 }

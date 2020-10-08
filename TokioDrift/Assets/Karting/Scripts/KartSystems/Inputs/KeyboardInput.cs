@@ -11,27 +11,29 @@ namespace KartGame.KartSystems
 
 	public class KeyboardInput : BaseInput
 	{
+		public Vector3 rotationSpeed;
 		public string Horizontal = "Horizontal";
 		public string Vertical = "Vertical";
+		public bool StateDetect;
 
 		Thread receiveThread; //1
 		UdpClient client; //2
 		int port; //3
 
-		public float ejex;
+		public int ejex;
 
 		void Start()
 		{
 			port = 5065; //1 
-			ejex = 0.0f;
+			ejex = 0;
 			InitUDP(); //4
+			StateDetect = false;
 		}
 
 
 		private void InitUDP()
 		{
 			print("UDP Initialized");
-
 			receiveThread = new Thread(new ThreadStart(ReceiveData)); //1 
 			receiveThread.IsBackground = true; //2
 			receiveThread.Start(); //3
@@ -41,14 +43,15 @@ namespace KartGame.KartSystems
 		private void ReceiveData()
 		{
 			try
-            {
+			{
 				client = new UdpClient(port); //1
 
-            } catch(Exception e)
-            {
+			}
+			catch (Exception e)
+			{
 				print("Default Port busy, created in another one");
 				client = new UdpClient(50003);
-            }
+			}
 			while (true) //2
 			{
 				try
@@ -61,15 +64,23 @@ namespace KartGame.KartSystems
 
 					if (String.Equals(text, "straight"))
 					{
-						ejex = 0.0f;
+						ejex = 0;
+						StateDetect = true;
 					}
 					else if (String.Equals(text, "left"))
 					{
-						ejex = -1.0f;
+						ejex = -1;
+						StateDetect = true;
 					}
 					else if (String.Equals(text, "right"))
 					{
-						ejex = 1.0f;
+						ejex = 1;
+						StateDetect = true;
+					}
+					else
+					{
+						ejex = 0;
+						StateDetect = false;
 					}
 
 				}

@@ -62,7 +62,7 @@ public class NetworkManagerCar : NetworkManager
     public override void Start()
     {
         base.Start();
-        //base.StartServer();
+        base.StartServer();
     }
 
     /// <summary>

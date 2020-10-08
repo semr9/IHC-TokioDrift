@@ -35,6 +35,7 @@ public class GameFlowManager : MonoBehaviour
     [Tooltip("Prefab for the lose game message")]
     public DisplayMessage loseDisplayMessage;
 
+    public GameObject NetworkManager;
 
     public GameState gameState { get; private set; }
 
@@ -115,7 +116,7 @@ public class GameFlowManager : MonoBehaviour
 
     void Update()
     {
-
+        //if (NetworkManager.GetComponent<Mirror.NetworkManagerCar>().numPlayers != 1) return;
         if (gameState != GameState.Play)
         {
             elapsedTimeBeforeEndScene += Time.deltaTime;

@@ -733,7 +733,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 144}
+  m_AnchoredPosition: {x: 0, y: 107.9}
   m_SizeDelta: {x: 380, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &597536398
@@ -854,7 +854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb0be89f0d0b38469396506a9e54beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneName: TutorialScene
+  SceneName: Tutorial1
 --- !u!1 &904770611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1659,7 +1659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1947208092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2112,6 +2112,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Kart_Display
+      objectReference: {fileID: 0}
+    - target: {fileID: 3474853878770434551, guid: 119b2c3ccac5c4160afc384f0909ee65,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3474853879522815745, guid: 119b2c3ccac5c4160afc384f0909ee65,
         type: 3}

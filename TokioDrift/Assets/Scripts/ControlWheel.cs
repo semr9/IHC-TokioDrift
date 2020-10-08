@@ -25,27 +25,27 @@ public class ControlWheel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ImageSteeringWheel.transform.eulerAngles = new Vector3(0, 0, -1 * Car.transform.eulerAngles.y);
-        //if (!stateChange)
-        //{
-        //    Text1IndicarWrong.SetActive(true);
-        //    Text1IndicarRight.SetActive(false);
+        ImageSteeringWheel.transform.eulerAngles = new Vector3(0, 0, -1 * Car.transform.eulerAngles.y);
+        if (!stateChange)
+        {
+            Text1IndicarWrong.SetActive(true);
+            Text1IndicarRight.SetActive(false);
 
-        //    ImageWrong.SetActive(true);
-        //    ImageRight.SetActive(false);
+            ImageWrong.SetActive(true);
+            ImageRight.SetActive(false);
 
-        //    if (Car.GetComponent<KartGame.KartSystems.KeyboardInput>().StateDetect) stateChange = true; // if cnot detecting change
-        //}
-        //else
-        //{
-        //    Text1IndicarWrong.SetActive(false);
-        //    Text1IndicarRight.SetActive(true);
+            if (Car.GetComponent<KartGame.KartSystems.KeyboardInput>().StateDetect) stateChange = true; // if cnot detecting change
+        }
+        else
+        {
+            Text1IndicarWrong.SetActive(false);
+            Text1IndicarRight.SetActive(true);
 
-        //    ImageWrong.SetActive(false);
-        //    ImageRight.SetActive(true);
+            ImageWrong.SetActive(false);
+            ImageRight.SetActive(true);
 
-        //    if (!Car.GetComponent<KartGame.KartSystems.KeyboardInput>().StateDetect) stateChange = false;
-        //}
+            if (!Car.GetComponent<KartGame.KartSystems.KeyboardInput>().StateDetect) stateChange = false;
+        }
     }
 }
 

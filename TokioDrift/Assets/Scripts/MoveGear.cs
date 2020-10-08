@@ -45,7 +45,7 @@ public class MoveGear : NetworkBehaviour
         started = false;
         sameAngleCount = 0;
 
-        if (currentScene != "TutorialScene")
+        if (currentScene != "Tutorial2")
             speedText = GameObject.Find("CartSpeed").GetComponent<Text>(); 
         else
         {
@@ -179,8 +179,7 @@ public class MoveGear : NetworkBehaviour
 
     void Update()
     {
-        print(currentScene);
-        if(currentScene == "TutorialScene")
+        if(currentScene == "Tutorial2")
             UpdateTutorial();
         else
             UpdateMain();
