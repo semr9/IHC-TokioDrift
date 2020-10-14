@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using Mirror;
 using System.Diagnostics;
 using System;
+using TMPro;
 
 
 /*
@@ -12,8 +13,10 @@ using System;
 
 public class NetworkManagerPhone : NetworkManager
 {
-    #region Unity Callbacks
     public Transform playerSpawn;
+    public GameObject ButtonConnectServer;
+    public GameObject connectedText;
+    #region Unity Callbacks
 
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
@@ -227,16 +230,8 @@ public class NetworkManagerPhone : NetworkManager
     /// </summary>
     public override void OnStartClient()
     {
-        //if(!NetworkServer.active)
-        //{
-        //    print("Network not active");
-        //    return;
-        //}
-        //print("Player connected");
-        //gear = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Capsule"));
-        //NetworkServer.Spawn(gear);
-
-
+        connectedText.SetActive(true);
+        ButtonConnectServer.SetActive(false);
     }
 
     /// <summary>
@@ -247,13 +242,17 @@ public class NetworkManagerPhone : NetworkManager
     /// <summary>
     /// This is called when a server is stopped - including when a host is stopped.
     /// </summary>
-    public override void OnStopServer() { }
+    public override void OnStopServer() {
+        ButtonConnectServer.SetActive(true);
+        connectedText.SetActive(false);
+    }
 
     /// <summary>
     /// This is called when a client is stopped.
     /// </summary>
     public override void OnStopClient() {
-        //NetworkServer.Destroy(gear);
+        ButtonConnectServer.SetActive(true);
+        connectedText.SetActive(false);
     }
 
     #endregion

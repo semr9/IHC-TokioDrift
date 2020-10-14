@@ -384,39 +384,33 @@ namespace Mirror
         /// </summary>
         public void StartClient()
         {
-            try
+            mode = NetworkManagerMode.ClientOnly;
+
+            InitializeSingleton();
+
+            if (authenticator != null)
             {
-                mode = NetworkManagerMode.ClientOnly;
-
-                InitializeSingleton();
-
-                if (authenticator != null)
-                {
-                    authenticator.OnStartClient();
-                    authenticator.OnClientAuthenticated.AddListener(OnClientAuthenticated);
-                }
-
-                if (runInBackground)
-                    Application.runInBackground = true;
-
-                isNetworkActive = true;
-
-                RegisterClientMessages();
-
-                if (string.IsNullOrEmpty(networkAddress))
-                {
-                    logger.LogError("Must set the Network Address field in the manager");
-                    return;
-                }
-                if (logger.LogEnabled()) logger.Log("NetworkManager StartClient address:" + networkAddress);
-
-                NetworkClient.Connect(networkAddress);
-
-                OnStartClient();
-            } catch(Exception e)
-            {
-
+                authenticator.OnStartClient();
+                authenticator.OnClientAuthenticated.AddListener(OnClientAuthenticated);
             }
+
+            if (runInBackground)
+                Application.runInBackground = true;
+
+            isNetworkActive = true;
+
+            RegisterClientMessages();
+
+            if (string.IsNullOrEmpty(networkAddress))
+            {
+                logger.LogError("Must set the Network Address field in the manager");
+                return;
+            }
+            if (logger.LogEnabled()) logger.Log("NetworkManager StartClient address:" + networkAddress);
+
+            NetworkClient.Connect(networkAddress);
+
+            OnStartClient();
         }
 
         /// <summary>
