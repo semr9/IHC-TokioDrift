@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using Mirror;
 using System.Diagnostics;
 using System;
+using UnityEngine.UI;
 using TMPro;
 
 
@@ -16,11 +17,19 @@ public class NetworkManagerPhone : NetworkManager
     public Transform playerSpawn;
     public GameObject ButtonConnectServer;
     public GameObject connectedText;
+    public GameObject ButtonDisconnect;
+    public GameObject TextInfoGyro;
     #region Unity Callbacks
 
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
         GameObject player = Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
+        if (!player.GetComponent<MoveGear>().gyroAvaivable)
+        {
+            TextInfoGyro.SetActive(true);
+            TextInfoGyro.GetComponent<TextMeshProUGUI>().text = "Phone doesn't have gyroscope and it's can't be used, please use the arrow key to accelerate and backup";
+        }
+
         NetworkServer.AddPlayerForConnection(conn, player);
     }
 
@@ -230,6 +239,7 @@ public class NetworkManagerPhone : NetworkManager
     /// </summary>
     public override void OnStartClient()
     {
+        ButtonDisconnect.SetActive(true);
         connectedText.SetActive(true);
         ButtonConnectServer.SetActive(false);
     }
@@ -243,6 +253,7 @@ public class NetworkManagerPhone : NetworkManager
     /// This is called when a server is stopped - including when a host is stopped.
     /// </summary>
     public override void OnStopServer() {
+        ButtonDisconnect.SetActive(false);
         ButtonConnectServer.SetActive(true);
         connectedText.SetActive(false);
     }
@@ -251,6 +262,7 @@ public class NetworkManagerPhone : NetworkManager
     /// This is called when a client is stopped.
     /// </summary>
     public override void OnStopClient() {
+        ButtonDisconnect.SetActive(false);
         ButtonConnectServer.SetActive(true);
         connectedText.SetActive(false);
     }

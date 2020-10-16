@@ -27,6 +27,8 @@ public class NetworkManagerTutorial : NetworkManager
     {
         GameObject.Find("TextMobileConn").GetComponent<TextMeshProUGUI>().text = "Phone connected!";
         GameObject.Find("Title").GetComponent<TextMeshProUGUI>().text = "Press the start button";
+        GameObject.Find("IdeaTutorial").GetComponent<TextMeshProUGUI>().text = "Follow the instruction below";
+        GameObject.Find("TutorialController").GetComponent<ControllerTutorial2>().Invoke("ActivateStartButton", 0);
         //GameObject.Find("Title").GetComponent<TextMeshProUGUI>().fontSize = 18;
         GameObject player = Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
         NetworkServer.AddPlayerForConnection(conn, player);

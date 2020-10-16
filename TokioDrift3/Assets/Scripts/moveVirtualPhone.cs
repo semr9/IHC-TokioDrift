@@ -21,8 +21,8 @@ public class moveVirtualPhone : MonoBehaviour
         if(NetworkManager.GetComponent<NetworkManagerTutorial>().numPlayers != 0)
         {
             this.GetComponent<RotateOnAxis>().rotate = false;
-            float fromGyro = GameObject.Find("Sphere(Clone)").GetComponent<MoveGear>().speed.y;
-            transform.rotation = new Quaternion(fromGyro - 0.7f, transform.rotation.y, transform.rotation.z, transform.rotation.w);
+            float fromGyro = GameObject.Find("Sphere(Clone)").GetComponent<MoveGear>().plainSpeed.x;
+            transform.rotation = new Quaternion(fromGyro, transform.rotation.y, transform.rotation.z, transform.rotation.w);
 
             //transform.Rotate(new Vector3(float.Parse(speedText.text)*0.2f,0,0));
         }

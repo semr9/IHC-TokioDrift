@@ -10,31 +10,47 @@ using System.Collections.Generic;
 public class MoveGear : NetworkBehaviour
 {
     Gyroscope gyro;
+    public bool gyroAvaivable;
     public Quaternion speed;
+    public Quaternion plainSpeed;
     public Quaternion correctionQuaternion;
 
     [Command]
-    public void sendSpeed(Quaternion newSpeed)
+    public void sendSpeed(Quaternion newSpeed, Quaternion newPlainSpeed, bool gyroInfo)
     {
         this.speed = newSpeed;
+        this.plainSpeed = newPlainSpeed;
+        this.gyroAvaivable = gyroInfo;
     }
+
 
     void Start()
     {
-        gyro = Input.gyro;
-        gyro.enabled = true;
-        correctionQuaternion = Quaternion.Euler(90f, 0f, 0f);
+        if (SystemInfo.supportsGyroscope)
+        {
+            gyro = Input.gyro;
+            gyro.enabled = true;
+            correctionQuaternion = Quaternion.Euler(90f, 0f, 0f);
+            gyroAvaivable = true;
+        } else
+            gyroAvaivable = false;
     }
 
     void Update()
     {
-        //speed = 0;
-        print(gyro.attitude);
+        if(!gyroAvaivable)
+        {
+            sendSpeed(speed, plainSpeed, gyroAvaivable);
+            return;
+        }
+        plainSpeed = GyroToUnity(gyro.attitude);
+
         Quaternion calculatedRotation = correctionQuaternion * GyroToUnity(gyro.attitude);
         transform.rotation = calculatedRotation;
         speed = calculatedRotation * new Quaternion(0,0,1,0);
-        sendSpeed(speed);
+        sendSpeed(speed, plainSpeed, true);
     }
+
     private static Quaternion GyroToUnity(Quaternion q)
     {
         return new Quaternion(q.x, q.y, -q.z, -q.w);

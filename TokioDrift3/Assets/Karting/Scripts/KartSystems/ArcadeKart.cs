@@ -137,6 +137,7 @@ namespace KartGame.KartSystems
         ArcadeKart.Stats finalStats;
 
         /****MY CODE*****/
+        public bool hasPhoneConnected;
         public Text speedText;
         public Text TextTopSpeed;
         public TextMeshProUGUI ComandoVoz;
@@ -146,6 +147,7 @@ namespace KartGame.KartSystems
 
         void Awake()
         {
+            hasPhoneConnected = false;
             Rigidbody = GetComponent<Rigidbody>();
             m_Inputs = GetComponents<IInput>();
             suspensionNeutralPos = SuspensionBody.transform.localPosition;
@@ -169,11 +171,13 @@ namespace KartGame.KartSystems
             GroundPercent = (float)groundedCount / Wheels.Length;
             AirPercent = 1 - GroundPercent;
 
-
-
             // gather inputs
             //float accel = Input.y;
-            float accel = float.Parse(speedText.text);
+            float accel;
+            if (hasPhoneConnected)
+                accel = float.Parse(speedText.text);
+            else
+                accel = Input.y;
             float turn = Input.x;
 
             if (ComandoVoz.text == "turbo")

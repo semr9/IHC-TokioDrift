@@ -19,7 +19,7 @@ public class TutorialMovePhone : MonoBehaviour
     {
         if(NetworkManager.GetComponent<NetworkManagerTutorial>().numPlayers != 0)
         {
-            float fromGyro = GameObject.Find("Sphere(Clone)").GetComponent<MoveGear>().speed.y;
+            //float fromGyro = GameObject.Find("Sphere(Clone)").GetComponent<MoveGear>().speed.y;
             if (state == 0) { // move up
                 if (transform.rotation.x >= 0.5f)
                     transform.Rotate(new Vector3(-90.0f, 0.0f, 0.0f));

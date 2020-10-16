@@ -63,7 +63,6 @@ public class Control : MonoBehaviour
                 ImageRight.SetActive(false);
                 ImageWrong.SetActive(true);
             }
-
         }
         else if (state == 1)
         {
